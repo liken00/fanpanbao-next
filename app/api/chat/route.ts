@@ -52,6 +52,13 @@ export async function POST(request: NextRequest) {
               { role: 'system', content: SYSTEM_PROMPT },
               { role: 'user', content: message }
             ],
+            bot_setting: [
+              {
+                bot_name: '复盘宝AI',
+                identity: '专业的A股股票分析助手',
+                greeting: '你好！我是复盘宝AI，有什么股票问题可以问我'
+              }
+            ],
             group_id: miniMaxGroupId
           })
         })
