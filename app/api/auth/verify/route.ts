@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     // Verify code
     const verification = db.prepare(
-      'SELECT * FROM verification_codes WHERE phone = ? AND code = ? AND expires_at > datetime("now") ORDER BY id DESC LIMIT 1'
+      'SELECT * FROM verification_codes WHERE phone = ? AND code = ? AND expires_at > datetime(\'now\') ORDER BY id DESC LIMIT 1'
     ).get(phone, code) as { id: number; phone: string; code: string; expires_at: string } | undefined
     console.log('Step 3: verification query done', verification ? 'found' : 'not found')
 
