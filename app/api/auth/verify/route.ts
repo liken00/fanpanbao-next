@@ -5,6 +5,7 @@ import { generateToken } from '@/lib/auth'
 export async function POST(request: NextRequest) {
   try {
     const { phone, code } = await request.json()
+    console.log('Step 1: parsed request', { phone, code })
 
     if (!phone || !code) {
       return NextResponse.json({
@@ -14,11 +15,13 @@ export async function POST(request: NextRequest) {
     }
 
     const db = getDb()
+    console.log('Step 2: got db')
 
     // Verify code
     const verification = db.prepare(
       'SELECT * FROM verification_codes WHERE phone = ? AND code = ? AND expires_at > datetime("now") ORDER BY id DESC LIMIT 1'
     ).get(phone, code) as { id: number; phone: string; code: string; expires_at: string } | undefined
+    console.log('Step 3: verification query done', verification ? 'found' : 'not found')
 
     if (!verification) {
       return NextResponse.json({
@@ -29,9 +32,11 @@ export async function POST(request: NextRequest) {
 
     // Delete used code
     db.prepare('DELETE FROM verification_codes WHERE id = ?').run(verification.id)
+    console.log('Step 4: deleted code')
 
     // Find or create user
     let user = db.prepare('SELECT * FROM users WHERE phone = ?').get(phone) as { id: number; phone: string; trials: number; lifetime: number; referral_count: number } | undefined
+    console.log('Step 5: user lookup', user ? 'found' : 'not found')
 
     if (!user) {
       const result = db.prepare('INSERT INTO users (phone, trials) VALUES (?, 3)').run(phone)
@@ -42,10 +47,12 @@ export async function POST(request: NextRequest) {
         lifetime: 0,
         referral_count: 0
       }
+      console.log('Step 6: created user', user.id)
     }
 
     // Generate JWT token
     const token = generateToken({ userId: user.id, phone: user.phone })
+    console.log('Step 7: generated token')
 
     return NextResponse.json({
       code: 0,
@@ -60,7 +67,7 @@ export async function POST(request: NextRequest) {
     console.error('Verify error:', error?.message, error?.stack)
     return NextResponse.json({
       code: 1,
-      message: '服务器错误: ' + (error?.message || '未知错误')
+      message: '服务器错误: ' + (error?.message || String(error))
     }, { status: 500 })
   }
 }
