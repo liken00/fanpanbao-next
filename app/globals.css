@@ -31,12 +31,8 @@ html {
 body {
   background-color: var(--bg-base);
   color: var(--text-sub);
-  font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* 系统自带中文字体，无需网络加载 */
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* 确保中文使用思源黑体 */
-h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea {
-  font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }

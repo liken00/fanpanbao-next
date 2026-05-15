@@ -47,7 +47,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="pt-24 pb-16 px-4 md:pt-32 md:pb-20 md:px-6">
+    <section className="pt-8 pb-16 px-4 md:pt-12 md:pb-20 md:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Hero Text */}
         <motion.div
