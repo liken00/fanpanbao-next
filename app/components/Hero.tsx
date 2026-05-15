@@ -24,6 +24,11 @@ export default function Hero() {
 
     try {
       const token = localStorage.getItem('token')
+      if (!token) {
+        setMessages(prev => [...prev, { role: 'ai', content: '⚠️ 请先登录' }])
+        setLoading(false)
+        return
+      }
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
