@@ -1,230 +1,203 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu, X, ChevronDown, TrendingUp, BarChart2, Clock, Shield, Wallet, Bell } from 'lucide-react'
 
-interface User {
-  phone: string
-  trials: number
-  lifetime: number
-}
+const longyunItems = [
+  { label: '主线确认', href: '/strategy#mainline', desc: '同板块≥2只同日2板' },
+  { label: '龙头判断', href: '/strategy#leader', desc: '三板封板时间最早' },
+  { label: '二波验证', href: '/strategy#wave2', desc: '连续两天首板≥5家' },
+  { label: '买点信号', href: '/strategy#entry', desc: 'MA50+MA10±5%缩量' },
+  { label: '止损规则', href: '/strategy#stop', desc: '跌破MA10当日收不回' },
+  { label: '仓位管理', href: '/strategy#position', desc: '3板0.25/4板0.35/5板0.5' },
+]
 
-interface NavbarProps {
-  user: User | null
-  setUser: (user: User | null) => void
-}
+const dailyItems = [
+  { label: '今日涨停板', href: '/daily#hot', icon: TrendingUp },
+  { label: '主线题材', href: '/daily#sector', icon: BarChart2 },
+  { label: '龙头追踪', href: '/daily#leader', icon: Clock },
+]
 
-export default function Navbar({ user, setUser }: NavbarProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-
-  const strategyItems = [
-    '主线确认', '龙头判断', '二波验证',
-    '买点信号', '止损规则', '仓位管理'
-  ]
-
-  const dailyItems = [
-    '今日复盘', '明日展望', '持仓分析'
-  ]
-
-  const handleLoginClick = () => {
-    const phone = prompt('请输入手机号:')
-    if (phone) {
-      login(phone)
-    }
-  }
-
-  const login = async (phone: string) => {
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone })
-      })
-      const data = await res.json()
-      if (data.code === 0) {
-        const code = prompt('请输入验证码:')
-        if (code) {
-          verify(phone, code)
-        }
-      } else {
-        alert(data.message || '发送失败')
-      }
-    } catch (err) {
-      alert('网络错误')
-    }
-  }
-
-  const verify = async (phone: string, code: string) => {
-    try {
-      const res = await fetch('/api/auth/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, code })
-      })
-      const data = await res.json()
-      if (data.token) {
-        localStorage.setItem('token', data.token)
-        setUser(data.user)
-        alert('登录成功')
-      } else {
-        alert(data.message || '验证失败')
-      }
-    } catch (err) {
-      alert('网络错误')
-    }
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    setUser(null)
-  }
+export default function Navbar() {
+  const [isLongyunOpen, setIsLongyunOpen] = useState(false)
+  const [isDailyOpen, setIsDailyOpen] = useState(false)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b" style={{ borderColor: '#30363d' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#0B0B0F]/80 backdrop-blur-[8px] border-b border-[#272736] transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
-            <span className="text-xl font-bold gradient-text">复盘宝</span>
-          </div>
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#2563EB] to-[#00D084] rounded-xl flex items-center justify-center text-lg font-bold text-white">
+              📊
+            </div>
+            <span className="text-xl font-bold text-white">复盘宝</span>
+          </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <a href="#" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#e6edf3' }}>Home</a>
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/" className="text-[#B0B0C3] hover:text-white transition-all duration-300">
+              首页
+            </Link>
 
-            {/* 龙韵智趋战法 Dropdown */}
+            {/* 龙韵智趋下拉 */}
             <div
-              className="dropdown relative"
-              onMouseEnter={() => setActiveDropdown('strategy')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              className="relative"
+              onMouseEnter={() => setIsLongyunOpen(true)}
+              onMouseLeave={() => setIsLongyunOpen(false)}
             >
-              <button className="flex items-center space-x-1 hover:text-[#58a6ff] transition-colors" style={{ color: '#e6edf3' }}>
-                <span>龙韵智趋战法</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+              <button className="flex items-center gap-1 text-[#B0B0C3] hover:text-white transition-all duration-300">
+                龙韵智趋战法
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isLongyunOpen ? 'rotate-180' : ''}`} />
               </button>
-              <div
-                className={`dropdown-menu absolute top-full left-0 mt-2 w-48 rounded-lg py-2 ${activeDropdown === 'strategy' ? 'open' : ''}`}
-                style={{ backgroundColor: '#1a1f2e' }}
-              >
-                {strategyItems.map((item) => (
-                  <a key={item} href="#" className="block px-4 py-2 hover:bg-[#161b22] transition-colors" style={{ color: '#e6edf3' }}>
-                    {item}
-                  </a>
-                ))}
-              </div>
+
+              <AnimatePresence>
+                {isLongyunOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] as const }}
+                    className="absolute top-full left-0 mt-2 w-64 bg-[#151520] rounded-xl shadow-lg border border-[#272736] overflow-hidden"
+                  >
+                    {longyunItems.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="block px-4 py-3 hover:bg-[#0B0B0F] transition-all duration-300 border-b border-[#272736]/50 last:border-0"
+                      >
+                        <div className="text-white text-sm font-medium">{item.label}</div>
+                        <div className="text-[#717185] text-xs mt-0.5">{item.desc}</div>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            {/* 每日复盘 Dropdown */}
+            {/* 每日复盘下拉 */}
             <div
-              className="dropdown relative"
-              onMouseEnter={() => setActiveDropdown('daily')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              className="relative"
+              onMouseEnter={() => setIsDailyOpen(true)}
+              onMouseLeave={() => setIsDailyOpen(false)}
             >
-              <button className="flex items-center space-x-1 hover:text-[#58a6ff] transition-colors" style={{ color: '#e6edf3' }}>
-                <span>每日复盘</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+              <button className="flex items-center gap-1 text-[#B0B0C3] hover:text-white transition-all duration-300">
+                每日复盘
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDailyOpen ? 'rotate-180' : ''}`} />
               </button>
-              <div
-                className={`dropdown-menu absolute top-full left-0 mt-2 w-40 rounded-lg py-2 ${activeDropdown === 'daily' ? 'open' : ''}`}
-                style={{ backgroundColor: '#1a1f2e' }}
-              >
-                {dailyItems.map((item) => (
-                  <a key={item} href="#" className="block px-4 py-2 hover:bg-[#161b22] transition-colors" style={{ color: '#e6edf3' }}>
-                    {item}
-                  </a>
-                ))}
-              </div>
+
+              <AnimatePresence>
+                {isDailyOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] as const }}
+                    className="absolute top-full left-0 mt-2 w-52 bg-[#151520] rounded-xl shadow-lg border border-[#272736] overflow-hidden"
+                  >
+                    {dailyItems.map((item) => {
+                      const Icon = item.icon
+                      return (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-[#0B0B0F] transition-all duration-300 border-b border-[#272736]/50 last:border-0"
+                        >
+                          <Icon className="w-4 h-4 text-[#2563EB]" />
+                          <span className="text-white text-sm">{item.label}</span>
+                        </Link>
+                      )
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            <a href="#pricing" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#e6edf3' }}>定价</a>
-            <a href="#about" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#e6edf3' }}>关于我们</a>
-          </div>
+            <Link href="/pricing" className="text-[#B0B0C3] hover:text-white transition-all duration-300">
+              定价
+            </Link>
 
-          {/* User Actions */}
-          <div className="hidden md:flex items-center space-x-4">
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <span style={{ color: '#8b949e' }}>{user.phone}</span>
-                <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: '#1a1f2e', color: '#58a6ff' }}>
-                  剩余 {user.lifetime ? '永久' : `${user.trials}次`}
-                </span>
-                <button onClick={handleLogout} className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>
-                  退出
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={handleLoginClick}
-                className="px-4 py-2 rounded-lg transition-colors"
-                style={{ backgroundColor: '#58a6ff', color: '#0d1117' }}
-              >
-                登录/注册
-              </button>
-            )}
-          </div>
+            <Link href="/about" className="text-[#B0B0C3] hover:text-white transition-all duration-300">
+              关于我们
+            </Link>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: '#e6edf3' }}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div className={`mobile-menu fixed top-16 right-0 bottom-0 w-64 md:hidden ${mobileMenuOpen ? 'open' : ''}`} style={{ backgroundColor: '#161b22' }}>
-        <div className="p-4 space-y-4">
-          <a href="#" className="block py-2" style={{ color: '#e6edf3' }}>Home</a>
-          <div className="py-2">
-            <span className="font-bold" style={{ color: '#e6edf3' }}>龙韵智趋战法</span>
-            <div className="mt-2 ml-4 space-y-2">
-              {strategyItems.map((item) => (
-                <a key={item} href="#" className="block py-1" style={{ color: '#8b949e' }}>{item}</a>
-              ))}
-            </div>
-          </div>
-          <div className="py-2">
-            <span className="font-bold" style={{ color: '#e6edf3' }}>每日复盘</span>
-            <div className="mt-2 ml-4 space-y-2">
-              {dailyItems.map((item) => (
-                <a key={item} href="#" className="block py-1" style={{ color: '#8b949e' }}>{item}</a>
-              ))}
-            </div>
-          </div>
-          <a href="#pricing" className="block py-2" style={{ color: '#e6edf3' }}>定价</a>
-          <a href="#about" className="block py-2" style={{ color: '#e6edf3' }}>关于我们</a>
-          {user ? (
-            <div className="pt-4 border-t" style={{ borderColor: '#30363d' }}>
-              <p style={{ color: '#8b949e' }}>{user.phone}</p>
-              <p className="py-2" style={{ color: '#58a6ff' }}>剩余 {user.lifetime ? '永久' : `${user.trials}次`}</p>
-              <button onClick={handleLogout} className="w-full py-2 rounded-lg" style={{ backgroundColor: '#30363d', color: '#e6edf3' }}>
-                退出
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={handleLoginClick}
-              className="w-full py-3 rounded-lg mt-4"
-              style={{ backgroundColor: '#58a6ff', color: '#0d1117' }}
+            <Link
+              href="/login"
+              className="px-5 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl transition-all duration-300 hover:scale-105 font-medium"
             >
               登录/注册
-            </button>
-          )}
+            </Link>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            className="md:hidden text-white p-2"
+          >
+            {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
-      </div>
-    </nav>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMobileOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] as const }}
+              className="md:hidden bg-[#0B0B0F] border-t border-[#272736] overflow-hidden"
+            >
+              <div className="px-6 py-4 flex flex-col gap-4">
+                <Link href="/" className="text-white py-2" onClick={() => setIsMobileOpen(false)}>首页</Link>
+
+                <div className="border border-[#272736] rounded-xl overflow-hidden">
+                  <div className="px-4 py-3 bg-[#151520] text-white font-medium text-sm">龙韵智趋战法</div>
+                  {longyunItems.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="block px-4 py-2.5 text-[#B0B0C3] hover:text-white hover:bg-[#0B0B0F] text-sm transition-all"
+                      onClick={() => setIsMobileOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="border border-[#272736] rounded-xl overflow-hidden">
+                  <div className="px-4 py-3 bg-[#151520] text-white font-medium text-sm">每日复盘</div>
+                  {dailyItems.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="flex items-center gap-2 px-4 py-2.5 text-[#B0B0C3] hover:text-white hover:bg-[#0B0B0F] text-sm transition-all"
+                      onClick={() => setIsMobileOpen(false)}
+                    >
+                      <item.icon className="w-3.5 h-3.5 text-[#2563EB]" />
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+
+                <Link href="/pricing" className="text-white py-2" onClick={() => setIsMobileOpen(false)}>定价</Link>
+                <Link href="/about" className="text-white py-2" onClick={() => setIsMobileOpen(false)}>关于我们</Link>
+
+                <Link
+                  href="/login"
+                  className="block text-center px-5 py-3 bg-[#2563EB] text-white rounded-xl font-medium"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  登录/注册
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </>
   )
 }

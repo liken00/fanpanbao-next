@@ -1,55 +1,109 @@
 'use client'
 
-export default function Footer() {
-  const currentYear = new Date().getFullYear()
+import Link from 'next/link'
+import { TrendingUp, BarChart2, Clock, Settings, CreditCard, Info, Mail } from 'lucide-react'
 
+export default function Footer() {
   return (
-    <footer className="py-12 px-4" style={{ backgroundColor: '#161b22', borderTop: '1px solid #30363d' }}>
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Logo & Description */}
-          <div className="md:col-span-2">
-            <h3 className="text-xl font-bold gradient-text mb-4">复盘宝</h3>
-            <p className="text-sm mb-4" style={{ color: '#8b949e' }}>
-              基于「龙韵智趋」战法的AI智能股票复盘工具，专注龙头二波机会，助力投资者提升复盘效率。
+    <footer className="bg-[#0B0B0F] border-t border-[#272736] pt-16 pb-8">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <Link href="/" className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#2563EB] to-[#00D084] rounded-xl flex items-center justify-center text-lg font-bold text-white">
+                📊
+              </div>
+              <span className="text-xl font-bold text-white">复盘宝</span>
+            </Link>
+            <p className="text-[#717185] text-sm leading-relaxed">
+              基于「龙韵智趋」战法的AI智能股票复盘工具，帮助投资者发现龙头二波机会。
             </p>
-            <div className="flex items-center space-x-2">
-              <span style={{ color: '#8b949e' }}>客服微信:</span>
-              <span className="font-semibold" style={{ color: '#58a6ff' }}>FPB_Assistant</span>
-            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* 产品 */}
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: '#e6edf3' }}>快速链接</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>龙韵智趋战法</a></li>
-              <li><a href="#" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>每日复盘</a></li>
-              <li><a href="#pricing" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>定价方案</a></li>
-              <li><a href="#about" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>关于我们</a></li>
+            <h4 className="text-white font-bold mb-4 text-sm">产品</h4>
+            <ul className="space-y-2.5">
+              {[
+                { label: '核心功能', href: '/#features' },
+                { label: '龙韵智趋战法', href: '/#strategy' },
+                { label: '定价', href: '/pricing' },
+                { label: 'AI问股', href: '/#hero' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-[#717185] hover:text-[#00D084] text-sm transition-colors duration-300">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* 战法 */}
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: '#e6edf3' }}>法律信息</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>用户协议</a></li>
-              <li><a href="#" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>隐私政策</a></li>
-              <li><a href="#" className="hover:text-[#58a6ff] transition-colors" style={{ color: '#8b949e' }}>免责声明</a></li>
+            <h4 className="text-white font-bold mb-4 text-sm">战法</h4>
+            <ul className="space-y-2.5">
+              {[
+                { label: '主线确认', href: '/strategy#mainline' },
+                { label: '龙头判断', href: '/strategy#leader' },
+                { label: '二波验证', href: '/strategy#wave2' },
+                { label: '买点信号', href: '/strategy#entry' },
+                { label: '止损规则', href: '/strategy#stop' },
+                { label: '仓位管理', href: '/strategy#position' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-[#717185] hover:text-[#00D084] text-sm transition-colors duration-300">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 每日复盘 */}
+          <div>
+            <h4 className="text-white font-bold mb-4 text-sm">每日复盘</h4>
+            <ul className="space-y-2.5">
+              {[
+                { label: '今日涨停板', href: '/daily#hot', Icon: TrendingUp },
+                { label: '主线题材', href: '/daily#sector', Icon: BarChart2 },
+                { label: '龙头追踪', href: '/daily#leader', Icon: Clock },
+              ].map((item) => {
+                const Icon = item.Icon
+                return (
+                  <li key={item.label}>
+                    <Link href={item.href} className="flex items-center gap-2 text-[#717185] hover:text-[#00D084] text-sm transition-colors duration-300">
+                      <Icon className="w-3.5 h-3.5" />
+                      {item.label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+
+            <h4 className="text-white font-bold mb-4 mt-8 text-sm">联系</h4>
+            <ul className="space-y-2.5">
+              <li className="flex items-center gap-2 text-[#717185] text-sm">
+                <Mail className="w-3.5 h-3.5" />
+                Xiuqiang5515
+              </li>
             </ul>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t pt-8" style={{ borderColor: '#30363d' }}>
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <p className="text-sm" style={{ color: '#8b949e' }}>
-              © {currentYear} 复盘宝. 保留所有权利.
-            </p>
-            <p className="text-sm mt-2 md:mt-0" style={{ color: '#8b949e' }}>
-              本工具仅供参考，不构成投资建议
-            </p>
+        {/* Bottom */}
+        <div className="border-t border-[#272736] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-[#717185] text-xs">
+            © 2026 复盘宝 | 本产品仅供AI分析参考，不构成投资建议，投资有风险，决策需谨慎
+          </p>
+          <div className="flex items-center gap-6">
+            <Link href="#" className="text-[#717185] hover:text-[#00D084] text-xs transition-colors duration-300">
+              隐私协议
+            </Link>
+            <Link href="#" className="text-[#717185] hover:text-[#00D084] text-xs transition-colors duration-300">
+              用户协议
+            </Link>
           </div>
         </div>
       </div>
