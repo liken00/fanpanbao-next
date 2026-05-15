@@ -59,7 +59,7 @@ export default function Strategy() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">龙韵智趋战法</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">龙韵智趋战法</h2>
           <p className="text-[#B0B0C3] text-lg">修哥多年实战验证的龙头二波体系</p>
         </motion.div>
 

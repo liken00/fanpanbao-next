@@ -47,16 +47,16 @@ export default function Hero() {
   }
 
   return (
-    <section className="pt-32 pb-20 px-6">
+    <section className="pt-24 pb-16 px-4 md:pt-32 md:pb-20 md:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Hero Text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-12"
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 md:mb-6">
             AI智能股票复盘工具
           </h1>
           <p className="text-lg text-[#B0B0C3] max-w-2xl mx-auto">
@@ -184,7 +184,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-8 text-center"
         >
-          <div className="inline-flex items-center gap-4 bg-[#151520] border border-[#272736] rounded-full px-6 py-3">
+          <div className="inline-flex flex-wrap justify-center items-center gap-2 sm:gap-4 bg-[#151520] border border-[#272736] rounded-full px-4 sm:px-6 py-2 sm:py-3">
             <span className="text-[#717185]">🎁 新用户免费体验</span>
             <span className="bg-[#2563EB] text-white px-3 py-1 rounded-full text-sm font-bold">3次</span>
             <span className="text-[#717185]">｜</span>

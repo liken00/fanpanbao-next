@@ -53,7 +53,7 @@ export default function Features() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">核心功能</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4">核心功能</h2>
           <p className="text-[#B0B0C3] text-lg">四大模块，完整覆盖选股 → 分析 → 决策全流程</p>
         </motion.div>
 
