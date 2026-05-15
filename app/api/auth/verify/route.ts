@@ -56,11 +56,11 @@ export async function POST(request: NextRequest) {
         lifetime: user.lifetime
       }
     })
-  } catch (error) {
-    console.error('Verify error:', error)
+  } catch (error: any) {
+    console.error('Verify error:', error?.message, error?.stack)
     return NextResponse.json({
       code: 1,
-      message: '服务器错误'
+      message: '服务器错误: ' + (error?.message || '未知错误')
     }, { status: 500 })
   }
 }
