@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     if (miniMaxApiKey && miniMaxGroupId) {
       try {
-        const response = await fetch('https://api.minimax.chat/v1/text/chatcompletion_pro', {
+        const response = await fetch('https://api.minimax.com/v1/text/chatcompletion_pro', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
