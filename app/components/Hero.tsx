@@ -23,17 +23,10 @@ export default function Hero() {
     setLoading(true)
 
     try {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        setMessages(prev => [...prev, { role: 'ai', content: '⚠️ 请先登录' }])
-        setLoading(false)
-        return
-      }
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {})
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ message: userMsg })
       })
