@@ -8,43 +8,43 @@ const features = [
     icon: TrendingUp,
     title: '龙韵智趋战法',
     desc: '主线确认 → 龙头判断 → 二波验证 → 买点信号，完整实战体系',
-    color: '#2563EB',
+    color: '#4F8EF7',
   },
   {
     icon: Bot,
     title: 'AI智能分析',
     desc: '输入任意股票问题，AI结合战法给出专业分析建议',
-    color: '#00D084',
+    color: '#14E0A5',
   },
   {
     icon: Bell,
     title: '每日复盘推送',
     desc: '每日18:00自动分析涨停板，识别主线题材和龙头股',
-    color: '#F59E0B',
+    color: '#FBBF24',
   },
   {
     icon: Shield,
     title: '止损规则',
     desc: '跌破MA10当日收不回，等次日拉涨平仓，纪律第一',
-    color: '#EF4444',
+    color: '#F87171',
   },
   {
     icon: Wallet,
     title: '仓位管理',
     desc: '3板0.25成 / 4板0.35成 / 5板0.5成，严格分层',
-    color: '#8B5CF6',
+    color: '#A78BFA',
   },
   {
     icon: Smartphone,
     title: '飞书推送',
     desc: '每日复盘报告推送飞书群，手机随时查看',
-    color: '#06B6D4',
+    color: '#22D3EE',
   },
 ]
 
 export default function Features() {
   return (
-    <section className="py-20 px-6 bg-[#0B0B0F]">
+    <section className="py-20 px-6 bg-[var(--bg-nav)]">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

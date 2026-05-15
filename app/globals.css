@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #08080C;
-  --bg-nav: #0B0B0F;
-  --bg-card: #151520;
+  --bg-base: #0A0A12;
+  --bg-nav: #0E0E16;
+  --bg-card: #1E1E30;
   --text-main: #FFFFFF;
-  --text-sub: #B0B0C3;
-  --text-placeholder: #717185;
-  --border-line: #272736;
-  --primary: #2563EB;
-  --primary-hover: #1D4ED8;
-  --accent: #00D084;
+  --text-sub: #C8C8D8;
+  --text-placeholder: #8888A0;
+  --border-line: #2A2A40;
+  --primary: #4F8EF7;
+  --primary-hover: #6BA3FF;
+  --accent: #14E0A5;
+  --accent-hover: #22F5B5;
   --radius-sm: 12px;
   --radius-md: 14px;
   --radius-lg: 16px;
   --transition-base: 0.25s ease;
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -31,7 +32,6 @@ html {
 body {
   background-color: var(--bg-base);
   color: var(--text-sub);
-  /* 系统自带中文字体，无需网络加载 */
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

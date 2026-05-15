@@ -52,7 +52,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="pt-8 pb-16 px-4 md:pt-12 md:pb-20 md:px-6">
+    <section className="pt-0 pb-16 px-4 md:pt-0 md:pb-20 md:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Hero Text */}
         <motion.div
@@ -75,10 +75,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-[#151520] rounded-2xl border border-[#272736] shadow-xl overflow-hidden"
+          className="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-line)] shadow-xl overflow-hidden"
         >
           {/* Chat Header */}
-          <div className="bg-gradient-to-r from-[#2563EB] to-[#00D084] px-6 py-4 flex items-center gap-3">
+          <div className="bg-gradient-to-r from-[#4F8EF7] to-[#14E0A5] px-6 py-4 flex items-center gap-3">
             <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
               <Bot className="w-5 h-5 text-white" />
             </div>

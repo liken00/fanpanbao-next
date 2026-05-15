@@ -15,10 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className="antialiased bg-[#08080C] text-[#B0B0C3]">
+      <body className="antialiased bg-[var(--bg-base)] text-[var(--text-sub)]">
         <div className="min-h-screen flex flex-col">
           <Navbar />
-          <main className="flex-1 pt-20">
+          <main className="flex-1 pt-16">
             {children}
           </main>
           <Footer />

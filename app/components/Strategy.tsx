@@ -9,42 +9,42 @@ const strategies = [
     icon: Search,
     title: '主线确认',
     desc: '同板块 ≥2只 同日2板 = 主线确认。等待龙头浮出水面。',
-    color: '#2563EB',
+    color: '#4F8EF7',
   },
   {
     num: '02',
     icon: Crown,
     title: '龙头判断',
     desc: '三板当天封板时间最早 = 龙头。≥双三板时看四板封板时间。',
-    color: '#F59E0B',
+    color: '#FBBF24',
   },
   {
     num: '03',
     icon: Waves,
     title: '二波验证',
     desc: '连续两天首板 ≥5家 + 不跟跌 = 二波确认。等待回调买点。',
-    color: '#00D084',
+    color: '#14E0A5',
   },
   {
     num: '04',
     icon: Target,
     title: '买点信号',
     desc: '30分钟MA50 + 日K MA10±5% + 缩量承接 + 题材异动',
-    color: '#EF4444',
+    color: '#F87171',
   },
   {
     num: '05',
     icon: ShieldCheck,
     title: '止损规则',
     desc: '跌破日K MA10且当日收不回 = 止损信号，等次日拉涨平仓',
-    color: '#8B5CF6',
+    color: '#A78BFA',
   },
   {
     num: '06',
     icon: Layers,
     title: '仓位管理',
     desc: '3板0.25成 / 4板0.35成 / 5板0.5成，单只最多5成，最多3只',
-    color: '#06B6D4',
+    color: '#22D3EE',
   },
 ]
 
@@ -73,7 +73,7 @@ export default function Strategy() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="bg-[#151520] border border-[#272736] rounded-2xl p-6 hover:border-[#2563EB] transition-all duration-300 hover:-translate-y-1"
+                className="bg-[var(--bg-card)] border border-[var(--border-line)] rounded-2xl p-6 hover:border-[#4F8EF7] transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="flex items-start gap-4">
                   <div className="text-5xl font-black text-[#272736]">{item.num}</div>
