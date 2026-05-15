@@ -60,7 +60,8 @@ export async function POST(request: NextRequest) {
               }
             ],
             reply_constraints: {
-              role: 'assistant'
+              role: 'assistant',
+              sender_type: 'bot'
             },
             group_id: miniMaxGroupId
           })
