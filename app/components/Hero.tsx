@@ -175,6 +175,47 @@ export default function Hero() {
           </div>
         </motion.div>
 
+        {/* Market News Flash */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mt-6 bg-[#151520] border border-[#272736] rounded-2xl p-5 relative overflow-hidden"
+        >
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#14E0A5] to-[#4F8EF7]" />
+          <div className="pl-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[#14E0A5] text-xs font-bold uppercase tracking-wider">今日市场</span>
+              <span className="text-[#717185] text-xs">2026-05-16</span>
+            </div>
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                <span className="text-[#B0B0C3]">上证指数</span>
+                <span className="text-[#14E0A5] font-bold">+0.52%</span>
+                <span className="text-[#B0B0C3]">深证成指</span>
+                <span className="text-[#14E0A5] font-bold">+0.38%</span>
+                <span className="text-[#B0B0C3]">创业板</span>
+                <span className="text-[#F87171] font-bold">-0.24%</span>
+              </div>
+              <div className="h-px bg-[#272736]" />
+              <div className="space-y-1.5 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#717185]">板块：</span>
+                  <span className="text-[#F59E0B]">电力板块</span>
+                  <span className="text-[#B0B0C3]">领涨</span>
+                  <span className="text-[#717185] ml-2">AI概念</span>
+                  <span className="text-[#B0B0C3]">分化</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[#717185]">主线：</span>
+                  <span className="text-[#4F8EF7] font-medium">大唐发电</span>
+                  <span className="bg-[#14E0A5]/20 text-[#14E0A5] text-xs px-2 py-0.5 rounded-full font-bold">7连板</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Banner */}
         <motion.div
           initial={{ opacity: 0 }}

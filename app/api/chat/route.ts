@@ -49,19 +49,20 @@ export async function POST(request: NextRequest) {
             tokens_to_generate: 1024,
             temperature: 0.7,
             messages: [
-              { role: 'system', content: SYSTEM_PROMPT },
-              { role: 'user', content: message }
+              { role: 'system', content: SYSTEM_PROMPT, sender_name: '复盘宝AI', sender_type: 'BOT' },
+              { role: 'user', content: message, sender_name: '用户', sender_type: 'USER' }
             ],
             bot_setting: [
               {
                 bot_name: '复盘宝AI',
-                identity: '专业的A股股票分析助手',
-                greeting: '你好！我是复盘宝AI，有什么股票问题可以问我'
+                content: '你是一个专业、热情的A股股票分析助手',
+                identity: '专业的A股股票分析助手'
               }
             ],
             reply_constraints: {
               role: 'assistant',
-              sender_type: 'bot'
+              sender_type: 'BOT',
+              sender_name: '复盘宝AI'
             },
             group_id: miniMaxGroupId
           })
