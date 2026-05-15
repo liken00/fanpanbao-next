@@ -17,10 +17,11 @@ export async function POST(request: NextRequest) {
     const db = getDb()
     console.log('Step 2: got db')
 
-    // Verify code
+    // Verify code - compare Unix timestamps directly
+    const now = Math.floor(Date.now() / 1000)
     const verification = db.prepare(
-      'SELECT * FROM verification_codes WHERE phone = ? AND code = ? AND expires_at > datetime(\'now\') ORDER BY id DESC LIMIT 1'
-    ).get(phone, code) as { id: number; phone: string; code: string; expires_at: string } | undefined
+      'SELECT * FROM verification_codes WHERE phone = ? AND code = ? AND ? < expires_at ORDER BY id DESC LIMIT 1'
+    ).get(phone, code, now) as { id: number; phone: string; code: string; expires_at: number } | undefined
     console.log('Step 3: verification query done', verification ? 'found' : 'not found')
 
     if (!verification) {

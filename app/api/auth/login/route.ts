@@ -19,7 +19,8 @@ export async function POST(request: NextRequest) {
 
     // Development mode: use fixed code
     const code = '1234'
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString() // 5 minutes
+    // Store as Unix timestamp (seconds) to avoid timezone issues
+    const expiresAt = Math.floor((Date.now() + 5 * 60 * 1000) / 1000)
 
     const db = getDb()
     // Delete old codes for this phone
