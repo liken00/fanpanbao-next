@@ -17,18 +17,17 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const db = getDb()
-    const code = generateCode()
-    const expiresAt = new Date(Date.now() + 2 * 60 * 1000).toISOString() // 2 minutes
+    // Development mode: use fixed code
+    const code = '1234'
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString() // 5 minutes
 
+    const db = getDb()
     // Delete old codes for this phone
     db.prepare('DELETE FROM verification_codes WHERE phone = ?').run(phone)
 
     // Insert new code
     db.prepare('INSERT INTO verification_codes (phone, code, expires_at) VALUES (?, ?, ?)').run(phone, code, expiresAt)
 
-    // In production, send SMS here
-    // For demo, log the code
     console.log(`[Demo] Verification code for ${phone}: ${code}`)
 
     return NextResponse.json({
