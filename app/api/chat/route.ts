@@ -59,6 +59,9 @@ export async function POST(request: NextRequest) {
                 greeting: '你好！我是复盘宝AI，有什么股票问题可以问我'
               }
             ],
+            reply_constraints: {
+              role: 'assistant'
+            },
             group_id: miniMaxGroupId
           })
         })
